@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "paths": {
+      "@aitarot/core": ["../../packages/core/src/index.ts"]
+    },
+    "noEmit": true
+  },
+  "include": ["src", "vite.config.ts"]
+}

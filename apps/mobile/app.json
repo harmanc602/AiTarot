@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "AiTarot",
+    "slug": "aitarot",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "aitarot",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0a0a0f",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0a0f"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aitarot.app"
+    },
+    "android": {
+      "package": "com.aitarot.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0a0f"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": ["expo-router", "expo-font", "expo-localization"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

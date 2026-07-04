@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+web-build/
+build/
+*.tsbuildinfo
+
+# Expo
+.expo/
+.expo-shared/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Env / logs
+.env
+.env.*
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

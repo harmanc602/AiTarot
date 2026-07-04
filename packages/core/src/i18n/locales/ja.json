@@ -1,0 +1,27 @@
+{
+  "app": {
+    "title": "AiTarot"
+  },
+  "picker": {
+    "instruction": "質問を心に浮かべながら、カードを選んでください。",
+    "enter": "決定"
+  },
+  "reveal": {
+    "title": "あなたのリーディング",
+    "back": "もう一度引く"
+  },
+  "orientation": {
+    "upright": "正位置",
+    "reversed": "逆位置"
+  },
+  "cardLabel": "{{name}}（{{orientation}}）",
+  "toast": {
+    "maxCards": "スプレッドは最大10枚までサポートしています。"
+  },
+  "language": {
+    "label": "言語",
+    "en": "English",
+    "zh": "简体中文",
+    "ja": "日本語"
+  }
+}

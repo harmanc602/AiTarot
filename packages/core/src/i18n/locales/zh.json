@@ -1,0 +1,27 @@
+{
+  "app": {
+    "title": "AiTarot"
+  },
+  "picker": {
+    "instruction": "专注于你的问题，然后选择你的牌。",
+    "enter": "确认"
+  },
+  "reveal": {
+    "title": "你的解读",
+    "back": "重新抽牌"
+  },
+  "orientation": {
+    "upright": "正",
+    "reversed": "逆"
+  },
+  "cardLabel": "{{name}}（{{orientation}}）",
+  "toast": {
+    "maxCards": "我们最多支持10张牌的牌阵。"
+  },
+  "language": {
+    "label": "语言",
+    "en": "English",
+    "zh": "简体中文",
+    "ja": "日本語"
+  }
+}
