@@ -3,11 +3,11 @@
     "title": "AiTarot"
   },
   "picker": {
-    "instruction": "专注于你的问题，然后选择你的牌。",
-    "enter": "确认"
+    "instruction": "專注於你的問題，然後選擇你的牌。",
+    "enter": "確認"
   },
   "reveal": {
-    "title": "你的解读",
+    "title": "你的解讀",
     "back": "重新抽牌"
   },
   "orientation": {
@@ -16,12 +16,12 @@
   },
   "cardLabel": "{{name}}（{{orientation}}）",
   "toast": {
-    "maxCards": "我们最多支持10张牌的牌阵。"
+    "maxCards": "我們最多支援10張牌的牌陣。"
   },
   "language": {
-    "label": "语言",
+    "label": "語言",
     "en": "English",
-    "zh": "简体中文",
+    "zh": "繁體中文",
     "ja": "日本語"
   }
 }

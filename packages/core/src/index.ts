@@ -20,11 +20,12 @@ export {
 export { randomOrientation, revealCards } from './logic/reveal';
 export {
   makeWheelLayout,
+  cardBaseAngle,
   cardAngle,
   normalizeAngle,
   isCardVisible,
   dragToRotation,
-  clampRotation,
+  wrapRotation,
   cardTransform,
   type WheelLayout,
 } from './logic/rotation';

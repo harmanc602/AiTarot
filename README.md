@@ -2,7 +2,7 @@
 
 A **tarot card picker** available as a **responsive web app** and a **cross-platform mobile app** (iOS / Android). Both are built from a shared TypeScript core so card data, translations, and game logic are written once.
 
-Spin an interactive wheel of 78 face-down cards, pick 1–10, and reveal your spread — each card upright or reversed, fully localized in **English, Simplified Chinese, and Japanese**.
+Spin an interactive wheel of 78 face-down cards, pick 1–10, and reveal your spread — each card upright or reversed, fully localized in **English, Traditional Chinese, and Japanese**.
 
 ---
 

@@ -1,45 +1,49 @@
 /**
  * Card-wheel rotation math, shared by web and mobile.
  *
- * The deck is arranged around a large circle. Only the *upper arc* is visible:
- * the wheel's center sits far below the screen, so cards fan across the top like
- * a hand of cards. Dragging left/right rotates the wheel, cycling through all 78
- * cards.
+ * The deck is arranged as a **real wheel**: all cards are spaced evenly around a
+ * full 360° circle. Only the *upper arc* is visible — the wheel's center sits
+ * below the visible band, so cards fan across the top like the rim of a Ferris
+ * wheel. Dragging left/right rotates the whole wheel; because the cards form a
+ * closed ring, rotation loops forever with no "end".
+ *
+ * The recommended rendering model is: place every card at its fixed
+ * `cardBaseAngle` around the hub once, then rotate the *container* by
+ * `rotation`. Cards then slide along the arc together (never popping in from the
+ * center), and any card past the horizon is simply clipped.
  *
  * Angles are in **degrees**. 0° points straight up (12 o'clock); positive angles
- * go clockwise. `rotation` is the wheel's current offset — increasing it as the
- * user drags right brings earlier cards toward the top.
+ * go clockwise.
  */
 
 export interface WheelLayout {
   /** Number of cards on the wheel. */
   count: number;
-  /** Angular gap between adjacent cards, in degrees. */
+  /** Angular gap between adjacent cards, in degrees (360 / count). */
   step: number;
   /**
    * Half-width of the visible arc, in degrees. Cards whose angle from top
-   * exceeds this are considered off-screen (below the horizon) and may be
-   * skipped for performance.
+   * exceeds this are below the horizon and can be hidden for performance.
    */
   visibleHalfArc: number;
 }
 
 /**
- * Build a layout for `count` cards spaced `step` degrees apart. `visibleHalfArc`
- * defaults to 90° (the full upper half). Tighten it to render fewer cards.
+ * Build a seamless-ring layout for `count` cards. The angular `step` is derived
+ * as `360 / count` so the cards close the circle exactly and rotation can loop
+ * forever. `visibleHalfArc` controls how much of the upper arc is shown.
  */
-export function makeWheelLayout(count: number, step = 7, visibleHalfArc = 90): WheelLayout {
-  return { count, step, visibleHalfArc };
+export function makeWheelLayout(count: number, visibleHalfArc = 62): WheelLayout {
+  return { count, step: 360 / count, visibleHalfArc };
 }
 
 /**
- * The angle (deg from top, clockwise) at which card `index` currently sits,
- * given the wheel `rotation`. Cards are centered so index 0 starts at the top
- * when rotation is 0.
+ * The card's *fixed* angle around the wheel (deg from top, clockwise), before
+ * any rotation. Card 0 sits at the top; the rest fan clockwise around the ring.
+ * Use this to place cards once inside a container you then rotate by `rotation`.
  */
-export function cardAngle(index: number, rotation: number, layout: WheelLayout): number {
-  const centered = index - (layout.count - 1) / 2;
-  return centered * layout.step - rotation;
+export function cardBaseAngle(index: number, layout: WheelLayout): number {
+  return index * layout.step;
 }
 
 /** Normalize an angle to the range (-180, 180]. */
@@ -48,6 +52,15 @@ export function normalizeAngle(angle: number): number {
   if (a > 180) a -= 360;
   if (a <= -180) a += 360;
   return a;
+}
+
+/**
+ * The angle (deg from top) at which card `index` currently sits given the wheel
+ * `rotation`, normalized to (-180, 180]. Handy for visibility tests, z-ordering,
+ * or "which card is at the top" queries.
+ */
+export function cardAngle(index: number, rotation: number, layout: WheelLayout): number {
+  return normalizeAngle(cardBaseAngle(index, layout) + rotation);
 }
 
 /** Whether a card at `angle` (deg from top) falls within the visible upper arc. */
@@ -60,24 +73,22 @@ export function isCardVisible(angle: number, layout: WheelLayout): boolean {
  * `sensitivity` is degrees per pixel; the default gives a natural, physical
  * feel on both touch and mouse.
  */
-export function dragToRotation(deltaX: number, sensitivity = 0.25): number {
+export function dragToRotation(deltaX: number, sensitivity = 0.28): number {
   return deltaX * sensitivity;
 }
 
 /**
- * Clamp `rotation` so the user cannot spin past either end of the (non-looping)
- * deck. The extremes place the first / last card at the top.
+ * Wrap `rotation` into (-180, 180]. The wheel is a closed ring, so rotation
+ * never hits an end — we only keep the number small to avoid unbounded growth.
  */
-export function clampRotation(rotation: number, layout: WheelLayout): number {
-  const half = ((layout.count - 1) / 2) * layout.step;
-  return Math.max(-half, Math.min(half, rotation));
+export function wrapRotation(rotation: number): number {
+  return normalizeAngle(rotation);
 }
 
 /**
  * Position a card on screen given its angle and the wheel radius. Returns the
- * offset (px) from the wheel's center plus the tangential tilt (deg) so the card
- * points outward like spokes. The caller places the wheel center below the
- * viewport; only cards with small |angle| are visible.
+ * offset (px) from the wheel's center plus the tangential tilt (deg) so cards
+ * point outward like spokes. Used when placing each card around the hub.
  */
 export function cardTransform(
   angleDeg: number,

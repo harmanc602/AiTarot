@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the canonical 78-card tarot dataset in English, Simplified Chinese, and Japanese.
+"""Generate the canonical 78-card tarot dataset in English, Traditional Chinese, and Japanese.
 
 The output (``packages/core/data/tarot-cards.json``) is the single source of truth for
 card identity and localized names consumed by both the web and mobile apps.
@@ -18,44 +18,44 @@ import json
 import os
 
 # --- Major Arcana ------------------------------------------------------------
-# (number, en, zh, ja) — number is the RWS 0..21 ordering.
+# (number, en, zh, ja) — zh is Traditional Chinese; number is the RWS 0..21 ordering.
 MAJORS = [
     (0, "The Fool", "愚者", "愚者"),
-    (1, "The Magician", "魔术师", "魔術師"),
+    (1, "The Magician", "魔術師", "魔術師"),
     (2, "The High Priestess", "女祭司", "女教皇"),
     (3, "The Empress", "皇后", "女帝"),
     (4, "The Emperor", "皇帝", "皇帝"),
     (5, "The Hierophant", "教皇", "教皇"),
-    (6, "The Lovers", "恋人", "恋人"),
-    (7, "The Chariot", "战车", "戦車"),
+    (6, "The Lovers", "戀人", "恋人"),
+    (7, "The Chariot", "戰車", "戦車"),
     (8, "Strength", "力量", "力"),
-    (9, "The Hermit", "隐士", "隠者"),
-    (10, "Wheel of Fortune", "命运之轮", "運命の輪"),
-    (11, "Justice", "正义", "正義"),
+    (9, "The Hermit", "隱士", "隠者"),
+    (10, "Wheel of Fortune", "命運之輪", "運命の輪"),
+    (11, "Justice", "正義", "正義"),
     (12, "The Hanged Man", "倒吊人", "吊された男"),
     (13, "Death", "死神", "死神"),
-    (14, "Temperance", "节制", "節制"),
-    (15, "The Devil", "恶魔", "悪魔"),
+    (14, "Temperance", "節制", "節制"),
+    (15, "The Devil", "惡魔", "悪魔"),
     (16, "The Tower", "高塔", "塔"),
     (17, "The Star", "星星", "星"),
     (18, "The Moon", "月亮", "月"),
-    (19, "The Sun", "太阳", "太陽"),
-    (20, "Judgement", "审判", "審判"),
+    (19, "The Sun", "太陽", "太陽"),
+    (20, "Judgement", "審判", "審判"),
     (21, "The World", "世界", "世界"),
 ]
 
 # --- Minor Arcana suits ------------------------------------------------------
-# imageKey prefix, en suit noun, zh suit char, ja suit word
+# imageKey prefix, en suit noun, zh (Traditional) suit char, ja suit word
 SUITS = [
     ("cups", "Cups", "杯", "カップ"),
-    ("pents", "Pentacles", "星币", "ペンタクル"),
-    ("swords", "Swords", "剑", "ソード"),
-    ("wands", "Wands", "权杖", "ワンド"),
+    ("pents", "Pentacles", "星幣", "ペンタクル"),
+    ("swords", "Swords", "劍", "ソード"),
+    ("wands", "Wands", "權杖", "ワンド"),
 ]
 
 # Ranks 1..14 keyed by their card number.
 # EN uses "Ace/Two.../Page/Knight/Queen/King".
-# ZH pip cards use 一..十; courts use 侍从/骑士/王后/国王, formatted as "{suit}{rank}" e.g. 杯一.
+# ZH (Traditional) pip cards use 一..十; courts use 侍從/騎士/王后/國王, formatted as "{suit}{rank}" e.g. 杯一.
 # JA uses エース/2..10 then ペイジ/ナイト/クイーン/キング, formatted as "{suit}の{rank}".
 EN_RANKS = {
     1: "Ace", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
@@ -63,7 +63,7 @@ EN_RANKS = {
 }
 ZH_RANKS = {
     1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六", 7: "七",
-    8: "八", 9: "九", 10: "十", 11: "侍从", 12: "骑士", 13: "王后", 14: "国王",
+    8: "八", 9: "九", 10: "十", 11: "侍從", 12: "騎士", 13: "王后", 14: "國王",
 }
 JA_RANKS = {
     1: "エース", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7",

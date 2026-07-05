@@ -11,10 +11,11 @@ import {
   randomOrientation,
   revealCards,
   makeWheelLayout,
+  cardBaseAngle,
   cardAngle,
   normalizeAngle,
   isCardVisible,
-  clampRotation,
+  wrapRotation,
   dragToRotation,
 } from '../src/index';
 
@@ -82,7 +83,7 @@ describe('reveal', () => {
 });
 
 describe('rotation', () => {
-  const layout = makeWheelLayout(78, 7, 90);
+  const layout = makeWheelLayout(78, 62);
 
   it('normalizes angles into (-180, 180]', () => {
     assert.equal(normalizeAngle(190), -170);
@@ -90,16 +91,22 @@ describe('rotation', () => {
     assert.equal(normalizeAngle(0), 0);
   });
 
-  it('places the middle card near the top at zero rotation', () => {
-    const mid = Math.floor((layout.count - 1) / 2);
-    assert.ok(Math.abs(cardAngle(mid, 0, layout)) <= layout.step);
-    assert.ok(isCardVisible(cardAngle(mid, 0, layout), layout));
+  it('spaces cards evenly around a full 360° ring', () => {
+    assert.ok(Math.abs(layout.step - 360 / 78) < 1e-9);
+    assert.equal(cardBaseAngle(0, layout), 0);
+    // Card 0 is at the top when rotation is 0.
+    assert.equal(cardAngle(0, 0, layout), 0);
+    assert.ok(isCardVisible(cardAngle(0, 0, layout), layout));
   });
 
-  it('clamps rotation within the deck bounds', () => {
-    const half = ((layout.count - 1) / 2) * layout.step;
-    assert.equal(clampRotation(1e6, layout), half);
-    assert.equal(clampRotation(-1e6, layout), -half);
+  it('loops seamlessly — rotation never clamps at an end', () => {
+    // A full turn returns every card to its start position.
+    for (const i of [0, 10, 40, 77]) {
+      assert.ok(Math.abs(cardAngle(i, 0, layout) - cardAngle(i, 360, layout)) < 1e-9);
+    }
+    // wrapRotation keeps the value bounded but never blocks further rotation.
+    assert.equal(wrapRotation(370), 10);
+    assert.equal(wrapRotation(-370), -10);
   });
 
   it('converts drag pixels to degrees', () => {

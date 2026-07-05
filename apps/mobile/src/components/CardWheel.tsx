@@ -1,115 +1,98 @@
-import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { useMemo } from 'react';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import {
-  runOnJS,
-  useAnimatedReaction,
+import Animated, {
+  useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
 import {
   DECK,
-  cardAngle,
+  cardBaseAngle,
   cardTransform,
-  clampRotation,
   dragToRotation,
-  isCardVisible,
   makeWheelLayout,
+  shuffle,
 } from '@aitarot/core';
 import CardBack from './CardBack';
+import WheelCard from './WheelCard';
 
 interface CardWheelProps {
   selected: string[];
   onSelect: (cardId: string) => void;
 }
 
-const CARD_WIDTH = 84;
-const STEP_DEG = 6.2;
+const VISIBLE_HALF_ARC = 54;
 
 /**
- * Native card wheel. A Pan gesture updates a Reanimated shared value on the UI
- * thread; a `useAnimatedReaction` mirrors it into React state so the visible
- * subset of cards re-renders. Only the upper arc is shown because the wheel's
- * center is placed below the viewport. Rotation math is shared via
- * `@aitarot/core`.
+ * Native card wheel — a *real* wheel. All 78 backs are placed once at fixed
+ * positions around a full 360° ring; a Pan gesture rotates the whole ring
+ * container (an Animated.View) on the UI thread. Cards slide along the arc
+ * together and the ring is closed, so it spins forever with no end stop.
+ *
+ * Only the upper arc is visible: the hub sits below the band and the viewport
+ * clips everything else. Rotation math is shared via `@aitarot/core`.
  */
 export default function CardWheel({ selected, onSelect }: CardWheelProps) {
-  const { width } = useWindowDimensions();
-  // Radius scales with screen width so the arc looks right on any device.
-  const radius = Math.max(width * 1.35, 480);
-  const layout = useMemo(() => makeWheelLayout(DECK.length, STEP_DEG, 70), []);
+  const { width, height } = useWindowDimensions();
+  const layout = useMemo(() => makeWheelLayout(DECK.length, VISIBLE_HALF_ARC), []);
+  // Shuffle once per mount so the wheel isn't in canonical order every time.
+  const deck = useMemo(() => shuffle(DECK), []);
+
+  // Responsive sizing derived from the screen.
+  const cardWidth = Math.max(96, Math.min(156, width / 3));
+  const cardHeight = cardWidth * 1.5;
+  const radius = Math.max(320, Math.min(width * 1.05, 620));
+  const bandHeight = Math.min(height * 0.5, radius);
+  const hubTop = radius + cardHeight * 0.35;
 
   const rotation = useSharedValue(0);
   const startRotation = useSharedValue(0);
-  const [rot, setRot] = useState(0);
-
-  // Mirror the UI-thread rotation into React state to re-render visible cards.
-  useAnimatedReaction(
-    () => rotation.value,
-    (value) => runOnJS(setRot)(value),
-  );
 
   const pan = Gesture.Pan()
     .onBegin(() => {
       startRotation.value = rotation.value;
     })
     .onUpdate((e) => {
-      const next = startRotation.value + dragToRotation(e.translationX);
-      rotation.value = clampRotation(next, layout);
+      // Wheel follows the finger: drag right → the ring spins right, so the
+      // cards under the finger travel the same way the hand moves. No clamp:
+      // the ring is closed, so rotation loops forever.
+      rotation.value = startRotation.value + dragToRotation(e.translationX);
     });
+
+  // Rotate the whole ring; cards are positioned once relative to the hub.
+  const ringStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
 
   return (
     <GestureDetector gesture={pan}>
-      <View style={styles.viewport} accessibilityRole="adjustable">
-        {/* Wheel center sits below the viewport; cards fan across the top. */}
-        <View style={[styles.hub, { top: '100%' }]}>
-          {DECK.map((card, index) => {
-            const angle = cardAngle(index, rot, layout);
-            if (!isCardVisible(angle, layout)) return null;
-            const { x, y, rotate } = cardTransform(angle, radius);
-            const isSelected = selected.includes(card.id);
+      <View style={[styles.viewport, { height: bandHeight }]} accessibilityRole="adjustable">
+        <Animated.View style={[styles.hub, { top: hubTop }, ringStyle]}>
+          {deck.map((card, index) => {
+            const base = cardBaseAngle(index, layout);
+            const { x, y, rotate } = cardTransform(base, radius);
             return (
-              <Pressable
+              <WheelCard
                 key={card.id}
+                x={x}
+                y={y}
+                rotate={rotate}
+                width={cardWidth}
+                height={cardHeight}
+                selected={selected.includes(card.id)}
                 onPress={() => onSelect(card.id)}
-                accessibilityRole="button"
-                accessibilityState={{ selected: isSelected }}
-                style={[
-                  styles.card,
-                  {
-                    width: CARD_WIDTH,
-                    marginLeft: -CARD_WIDTH / 2,
-                    marginTop: -CARD_WIDTH * 0.75,
-                    transform: [
-                      { translateX: x },
-                      { translateY: isSelected ? y - 20 : y },
-                      { rotate: `${rotate}deg` },
-                      { scale: isSelected ? 1.06 : 1 },
-                    ],
-                    zIndex: isSelected ? 999 : 100 - Math.round(Math.abs(angle)),
-                  },
-                  isSelected && styles.selected,
-                ]}
               >
-                <CardBack width={CARD_WIDTH} />
-              </Pressable>
+                <CardBack width={cardWidth} />
+              </WheelCard>
             );
           })}
-        </View>
+        </Animated.View>
       </View>
     </GestureDetector>
   );
 }
 
 const styles = StyleSheet.create({
-  viewport: { flex: 1, width: '100%', overflow: 'hidden' },
-  hub: { position: 'absolute', left: '50%' },
-  card: { position: 'absolute' },
-  selected: {
-    shadowColor: '#c9b6ff',
-    shadowOpacity: 0.9,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 0 },
-    borderRadius: 10,
-    elevation: 12,
-  },
+  viewport: { width: '100%', overflow: 'hidden' },
+  hub: { position: 'absolute', left: '50%', width: 0, height: 0 },
 });

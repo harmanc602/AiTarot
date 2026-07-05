@@ -10,7 +10,6 @@ import { colors, fonts } from '@aitarot/core';
 
 interface EnterButtonProps {
   visible: boolean;
-  count: number;
   onPress: () => void;
 }
 
@@ -20,7 +19,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
  * Confirm button that fades/scales in only when at least one card is selected.
  * Mirrors the web EnterButton behaviour.
  */
-export default function EnterButton({ visible, count, onPress }: EnterButtonProps) {
+export default function EnterButton({ visible, onPress }: EnterButtonProps) {
   const { t } = useTranslation();
   const progress = useSharedValue(0);
 
@@ -40,9 +39,7 @@ export default function EnterButton({ visible, count, onPress }: EnterButtonProp
       disabled={!visible}
       accessibilityRole="button"
     >
-      <Text style={styles.label}>
-        {t('picker.enter')} · {count}
-      </Text>
+      <Text style={styles.label}>{t('picker.enter')}</Text>
     </AnimatedPressable>
   );
 }

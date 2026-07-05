@@ -52,7 +52,7 @@ export default function PickerScreen() {
       <View style={styles.top}>
         <Text style={styles.instruction}>{t('picker.instruction')}</Text>
         <View style={styles.enterSlot}>
-          <EnterButton visible={canConfirm(selected)} count={selected.length} onPress={handleEnter} />
+          <EnterButton visible={canConfirm(selected)} onPress={handleEnter} />
         </View>
       </View>
 

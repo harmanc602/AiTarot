@@ -1,6 +1,6 @@
 # Internationalization (i18n) Guide
 
-AiTarot ships in **English (`en`)**, **Simplified Chinese (`zh`)**, and **Japanese (`ja`)**.
+AiTarot ships in **English (`en`)**, **Traditional Chinese (`zh`)**, and **Japanese (`ja`)**.
 All UI strings, card names, and system messages are localized. Both apps use
 [`i18next`](https://www.i18next.com/) + `react-i18next` and share their translation
 resources from `@aitarot/core`, so there is exactly **one** place to edit each string.

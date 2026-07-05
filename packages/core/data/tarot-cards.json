@@ -19,7 +19,7 @@
     "imageKey": "maj01",
     "name": {
       "en": "The Magician",
-      "zh": "魔术师",
+      "zh": "魔術師",
       "ja": "魔術師"
     }
   },
@@ -79,7 +79,7 @@
     "imageKey": "maj06",
     "name": {
       "en": "The Lovers",
-      "zh": "恋人",
+      "zh": "戀人",
       "ja": "恋人"
     }
   },
@@ -91,7 +91,7 @@
     "imageKey": "maj07",
     "name": {
       "en": "The Chariot",
-      "zh": "战车",
+      "zh": "戰車",
       "ja": "戦車"
     }
   },
@@ -115,7 +115,7 @@
     "imageKey": "maj09",
     "name": {
       "en": "The Hermit",
-      "zh": "隐士",
+      "zh": "隱士",
       "ja": "隠者"
     }
   },
@@ -127,7 +127,7 @@
     "imageKey": "maj10",
     "name": {
       "en": "Wheel of Fortune",
-      "zh": "命运之轮",
+      "zh": "命運之輪",
       "ja": "運命の輪"
     }
   },
@@ -139,7 +139,7 @@
     "imageKey": "maj11",
     "name": {
       "en": "Justice",
-      "zh": "正义",
+      "zh": "正義",
       "ja": "正義"
     }
   },
@@ -175,7 +175,7 @@
     "imageKey": "maj14",
     "name": {
       "en": "Temperance",
-      "zh": "节制",
+      "zh": "節制",
       "ja": "節制"
     }
   },
@@ -187,7 +187,7 @@
     "imageKey": "maj15",
     "name": {
       "en": "The Devil",
-      "zh": "恶魔",
+      "zh": "惡魔",
       "ja": "悪魔"
     }
   },
@@ -235,7 +235,7 @@
     "imageKey": "maj19",
     "name": {
       "en": "The Sun",
-      "zh": "太阳",
+      "zh": "太陽",
       "ja": "太陽"
     }
   },
@@ -247,7 +247,7 @@
     "imageKey": "maj20",
     "name": {
       "en": "Judgement",
-      "zh": "审判",
+      "zh": "審判",
       "ja": "審判"
     }
   },
@@ -391,7 +391,7 @@
     "imageKey": "cups11",
     "name": {
       "en": "Page of Cups",
-      "zh": "杯侍从",
+      "zh": "杯侍從",
       "ja": "カップのペイジ"
     }
   },
@@ -403,7 +403,7 @@
     "imageKey": "cups12",
     "name": {
       "en": "Knight of Cups",
-      "zh": "杯骑士",
+      "zh": "杯騎士",
       "ja": "カップのナイト"
     }
   },
@@ -427,7 +427,7 @@
     "imageKey": "cups14",
     "name": {
       "en": "King of Cups",
-      "zh": "杯国王",
+      "zh": "杯國王",
       "ja": "カップのキング"
     }
   },
@@ -439,7 +439,7 @@
     "imageKey": "pents01",
     "name": {
       "en": "Ace of Pentacles",
-      "zh": "星币一",
+      "zh": "星幣一",
       "ja": "ペンタクルのエース"
     }
   },
@@ -451,7 +451,7 @@
     "imageKey": "pents02",
     "name": {
       "en": "Two of Pentacles",
-      "zh": "星币二",
+      "zh": "星幣二",
       "ja": "ペンタクルの2"
     }
   },
@@ -463,7 +463,7 @@
     "imageKey": "pents03",
     "name": {
       "en": "Three of Pentacles",
-      "zh": "星币三",
+      "zh": "星幣三",
       "ja": "ペンタクルの3"
     }
   },
@@ -475,7 +475,7 @@
     "imageKey": "pents04",
     "name": {
       "en": "Four of Pentacles",
-      "zh": "星币四",
+      "zh": "星幣四",
       "ja": "ペンタクルの4"
     }
   },
@@ -487,7 +487,7 @@
     "imageKey": "pents05",
     "name": {
       "en": "Five of Pentacles",
-      "zh": "星币五",
+      "zh": "星幣五",
       "ja": "ペンタクルの5"
     }
   },
@@ -499,7 +499,7 @@
     "imageKey": "pents06",
     "name": {
       "en": "Six of Pentacles",
-      "zh": "星币六",
+      "zh": "星幣六",
       "ja": "ペンタクルの6"
     }
   },
@@ -511,7 +511,7 @@
     "imageKey": "pents07",
     "name": {
       "en": "Seven of Pentacles",
-      "zh": "星币七",
+      "zh": "星幣七",
       "ja": "ペンタクルの7"
     }
   },
@@ -523,7 +523,7 @@
     "imageKey": "pents08",
     "name": {
       "en": "Eight of Pentacles",
-      "zh": "星币八",
+      "zh": "星幣八",
       "ja": "ペンタクルの8"
     }
   },
@@ -535,7 +535,7 @@
     "imageKey": "pents09",
     "name": {
       "en": "Nine of Pentacles",
-      "zh": "星币九",
+      "zh": "星幣九",
       "ja": "ペンタクルの9"
     }
   },
@@ -547,7 +547,7 @@
     "imageKey": "pents10",
     "name": {
       "en": "Ten of Pentacles",
-      "zh": "星币十",
+      "zh": "星幣十",
       "ja": "ペンタクルの10"
     }
   },
@@ -559,7 +559,7 @@
     "imageKey": "pents11",
     "name": {
       "en": "Page of Pentacles",
-      "zh": "星币侍从",
+      "zh": "星幣侍從",
       "ja": "ペンタクルのペイジ"
     }
   },
@@ -571,7 +571,7 @@
     "imageKey": "pents12",
     "name": {
       "en": "Knight of Pentacles",
-      "zh": "星币骑士",
+      "zh": "星幣騎士",
       "ja": "ペンタクルのナイト"
     }
   },
@@ -583,7 +583,7 @@
     "imageKey": "pents13",
     "name": {
       "en": "Queen of Pentacles",
-      "zh": "星币王后",
+      "zh": "星幣王后",
       "ja": "ペンタクルのクイーン"
     }
   },
@@ -595,7 +595,7 @@
     "imageKey": "pents14",
     "name": {
       "en": "King of Pentacles",
-      "zh": "星币国王",
+      "zh": "星幣國王",
       "ja": "ペンタクルのキング"
     }
   },
@@ -607,7 +607,7 @@
     "imageKey": "swords01",
     "name": {
       "en": "Ace of Swords",
-      "zh": "剑一",
+      "zh": "劍一",
       "ja": "ソードのエース"
     }
   },
@@ -619,7 +619,7 @@
     "imageKey": "swords02",
     "name": {
       "en": "Two of Swords",
-      "zh": "剑二",
+      "zh": "劍二",
       "ja": "ソードの2"
     }
   },
@@ -631,7 +631,7 @@
     "imageKey": "swords03",
     "name": {
       "en": "Three of Swords",
-      "zh": "剑三",
+      "zh": "劍三",
       "ja": "ソードの3"
     }
   },
@@ -643,7 +643,7 @@
     "imageKey": "swords04",
     "name": {
       "en": "Four of Swords",
-      "zh": "剑四",
+      "zh": "劍四",
       "ja": "ソードの4"
     }
   },
@@ -655,7 +655,7 @@
     "imageKey": "swords05",
     "name": {
       "en": "Five of Swords",
-      "zh": "剑五",
+      "zh": "劍五",
       "ja": "ソードの5"
     }
   },
@@ -667,7 +667,7 @@
     "imageKey": "swords06",
     "name": {
       "en": "Six of Swords",
-      "zh": "剑六",
+      "zh": "劍六",
       "ja": "ソードの6"
     }
   },
@@ -679,7 +679,7 @@
     "imageKey": "swords07",
     "name": {
       "en": "Seven of Swords",
-      "zh": "剑七",
+      "zh": "劍七",
       "ja": "ソードの7"
     }
   },
@@ -691,7 +691,7 @@
     "imageKey": "swords08",
     "name": {
       "en": "Eight of Swords",
-      "zh": "剑八",
+      "zh": "劍八",
       "ja": "ソードの8"
     }
   },
@@ -703,7 +703,7 @@
     "imageKey": "swords09",
     "name": {
       "en": "Nine of Swords",
-      "zh": "剑九",
+      "zh": "劍九",
       "ja": "ソードの9"
     }
   },
@@ -715,7 +715,7 @@
     "imageKey": "swords10",
     "name": {
       "en": "Ten of Swords",
-      "zh": "剑十",
+      "zh": "劍十",
       "ja": "ソードの10"
     }
   },
@@ -727,7 +727,7 @@
     "imageKey": "swords11",
     "name": {
       "en": "Page of Swords",
-      "zh": "剑侍从",
+      "zh": "劍侍從",
       "ja": "ソードのペイジ"
     }
   },
@@ -739,7 +739,7 @@
     "imageKey": "swords12",
     "name": {
       "en": "Knight of Swords",
-      "zh": "剑骑士",
+      "zh": "劍騎士",
       "ja": "ソードのナイト"
     }
   },
@@ -751,7 +751,7 @@
     "imageKey": "swords13",
     "name": {
       "en": "Queen of Swords",
-      "zh": "剑王后",
+      "zh": "劍王后",
       "ja": "ソードのクイーン"
     }
   },
@@ -763,7 +763,7 @@
     "imageKey": "swords14",
     "name": {
       "en": "King of Swords",
-      "zh": "剑国王",
+      "zh": "劍國王",
       "ja": "ソードのキング"
     }
   },
@@ -775,7 +775,7 @@
     "imageKey": "wands01",
     "name": {
       "en": "Ace of Wands",
-      "zh": "权杖一",
+      "zh": "權杖一",
       "ja": "ワンドのエース"
     }
   },
@@ -787,7 +787,7 @@
     "imageKey": "wands02",
     "name": {
       "en": "Two of Wands",
-      "zh": "权杖二",
+      "zh": "權杖二",
       "ja": "ワンドの2"
     }
   },
@@ -799,7 +799,7 @@
     "imageKey": "wands03",
     "name": {
       "en": "Three of Wands",
-      "zh": "权杖三",
+      "zh": "權杖三",
       "ja": "ワンドの3"
     }
   },
@@ -811,7 +811,7 @@
     "imageKey": "wands04",
     "name": {
       "en": "Four of Wands",
-      "zh": "权杖四",
+      "zh": "權杖四",
       "ja": "ワンドの4"
     }
   },
@@ -823,7 +823,7 @@
     "imageKey": "wands05",
     "name": {
       "en": "Five of Wands",
-      "zh": "权杖五",
+      "zh": "權杖五",
       "ja": "ワンドの5"
     }
   },
@@ -835,7 +835,7 @@
     "imageKey": "wands06",
     "name": {
       "en": "Six of Wands",
-      "zh": "权杖六",
+      "zh": "權杖六",
       "ja": "ワンドの6"
     }
   },
@@ -847,7 +847,7 @@
     "imageKey": "wands07",
     "name": {
       "en": "Seven of Wands",
-      "zh": "权杖七",
+      "zh": "權杖七",
       "ja": "ワンドの7"
     }
   },
@@ -859,7 +859,7 @@
     "imageKey": "wands08",
     "name": {
       "en": "Eight of Wands",
-      "zh": "权杖八",
+      "zh": "權杖八",
       "ja": "ワンドの8"
     }
   },
@@ -871,7 +871,7 @@
     "imageKey": "wands09",
     "name": {
       "en": "Nine of Wands",
-      "zh": "权杖九",
+      "zh": "權杖九",
       "ja": "ワンドの9"
     }
   },
@@ -883,7 +883,7 @@
     "imageKey": "wands10",
     "name": {
       "en": "Ten of Wands",
-      "zh": "权杖十",
+      "zh": "權杖十",
       "ja": "ワンドの10"
     }
   },
@@ -895,7 +895,7 @@
     "imageKey": "wands11",
     "name": {
       "en": "Page of Wands",
-      "zh": "权杖侍从",
+      "zh": "權杖侍從",
       "ja": "ワンドのペイジ"
     }
   },
@@ -907,7 +907,7 @@
     "imageKey": "wands12",
     "name": {
       "en": "Knight of Wands",
-      "zh": "权杖骑士",
+      "zh": "權杖騎士",
       "ja": "ワンドのナイト"
     }
   },
@@ -919,7 +919,7 @@
     "imageKey": "wands13",
     "name": {
       "en": "Queen of Wands",
-      "zh": "权杖王后",
+      "zh": "權杖王后",
       "ja": "ワンドのクイーン"
     }
   },
@@ -931,7 +931,7 @@
     "imageKey": "wands14",
     "name": {
       "en": "King of Wands",
-      "zh": "权杖国王",
+      "zh": "權杖國王",
       "ja": "ワンドのキング"
     }
   }
