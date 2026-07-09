@@ -3,16 +3,16 @@
     "title": "AiTarot"
   },
   "picker": {
-    "instruction": "專注於你的問題，然後選擇你的牌。",
+    "instruction": "專心想着你的問題，然後選擇卡牌。",
     "enter": "確認"
   },
   "reveal": {
-    "title": "你的解讀",
+    "title": "你的牌陣",
     "back": "重新抽牌"
   },
   "orientation": {
-    "upright": "正",
-    "reversed": "逆"
+    "upright": "正位",
+    "reversed": "逆位"
   },
   "cardLabel": "{{name}}（{{orientation}}）",
   "toast": {
