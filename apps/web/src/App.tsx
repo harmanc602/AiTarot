@@ -77,8 +77,11 @@ export default function App() {
         {/* Upper part: instruction + Enter button. shrink-0 → only as tall as
             its content, centered, never eating the wheel's room. */}
         <div className="flex shrink-0 flex-col items-center justify-center gap-4 px-4 py-3 text-center">
-          <p className="max-w-md font-serif text-lg text-white/90 sm:text-xl">
-            {t('picker.instruction')}
+          <p className="font-serif text-lg text-white/90 sm:text-xl">
+            {/* dangerouslySetInnerHTML so the <wbr /> in ja.json breaks the line
+                cleanly after the comma if wrapping is needed (on narrow screens),
+                but on wide screens the whole instruction stays on one line. */}
+            <span dangerouslySetInnerHTML={{ __html: t('picker.instruction') }} />
           </p>
           <div className="h-12">
             <EnterButton visible={canConfirm(selected)} onEnter={handleEnter} />

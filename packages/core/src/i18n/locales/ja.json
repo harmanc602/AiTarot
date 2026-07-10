@@ -3,11 +3,11 @@
     "title": "AiTarot"
   },
   "picker": {
-    "instruction": "質問を心に浮かべながら、カードを選んでください。",
+    "instruction": "質問を心に浮かべながら、<wbr />カードを選んでください。",
     "enter": "決定"
   },
   "reveal": {
-    "title": "あなたのリーディング",
+    "title": "あなたのカード",
     "back": "もう一度引く"
   },
   "orientation": {
