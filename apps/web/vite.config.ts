@@ -6,7 +6,14 @@ import path from 'node:path';
 // mobile app. Allow Vite to serve/bundle them from outside the app dir.
 const repoRoot = path.resolve(__dirname, '..', '..');
 
+// `base` is the public path the app is served under. Vercel/Netlify serve from
+// the root (`/`), but GitHub Pages serves a project site from `/<repo>/`, so the
+// Pages build sets VITE_BASE=/AiTarot/ (see .github/workflows/deploy-pages.yml).
+// Without it, every hashed asset would 404 on Pages and the page renders blank.
+const base = process.env.VITE_BASE ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [react()],
   resolve: {
     alias: {

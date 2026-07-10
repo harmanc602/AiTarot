@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { revealedCardLabel, type Language, type RevealedCard } from '@aitarot/core';
+import { cardName, revealedCardLabel, type Language, type RevealedCard } from '@aitarot/core';
 import { cardImage } from '../cardImages';
 
 interface RevealPageProps {
@@ -14,14 +14,15 @@ interface RevealPageProps {
 // the spread never overflows behind the title / Back button.
 const CARD_ASPECT = 1.8;
 const GAP = 20; // px gap between cards (matches gap-5)
-// Per-card vertical chrome that isn't the image: the label line, its `mt-1`
-// margin, the card's 1px top+bottom border, plus a little line-height slack.
-// `fitGrid` must subtract ALL of it per row or the spread grows taller than
-// measured and bleeds over the title / Back button.
-const LABEL_H = 20; // label line height
+// Per-card vertical chrome that isn't the image: the label, its `mt-1` margin,
+// and the card's 1px top+bottom border. `fitGrid` must subtract ALL of it per
+// row or the spread grows taller than measured and bleeds over the title /
+// Back button. The label height varies with the language (English wraps the
+// orientation onto a second line, so it needs two lines' worth), so it's passed
+// in rather than a constant.
+const LABEL_LINE_H = 20; // one line of label
 const LABEL_MARGIN = 4; // mt-1
 const CARD_BORDER = 2; // 1px top + 1px bottom
-const ROW_EXTRA = LABEL_H + LABEL_MARGIN + CARD_BORDER;
 const SAFETY = 0.98; // guard against sub-pixel rounding
 
 /**
@@ -29,12 +30,14 @@ const SAFETY = 0.98; // guard against sub-pixel rounding
  * the whole spread fit inside `avail` (w×h) without scrolling. We try every
  * column count and keep the one that yields the largest card, constrained by
  * BOTH the available width and height — so a small spread on a short-but-wide
- * window doesn't blow the cards up past what fits vertically.
+ * window doesn't blow the cards up past what fits vertically. `labelH` is the
+ * label's height for the active language (1 line vs. 2 for English).
  */
-function fitGrid(count: number, avail: { w: number; h: number }) {
+function fitGrid(count: number, avail: { w: number; h: number }, labelH: number) {
   if (count === 0 || avail.w === 0 || avail.h === 0) {
     return { cols: 1, cardWidth: 0 };
   }
+  const rowExtra = labelH + LABEL_MARGIN + CARD_BORDER;
   const h = avail.h * SAFETY;
   let best = { cols: 1, cardWidth: 0 };
   for (let cols = 1; cols <= count; cols++) {
@@ -43,7 +46,7 @@ function fitGrid(count: number, avail: { w: number; h: number }) {
     const wByWidth = (avail.w - (cols - 1) * GAP) / cols;
     // Height limit: rows of (image + label + margin + border + gap) must fit.
     const rowH = (h - (rows - 1) * GAP) / rows;
-    const wByHeight = (rowH - ROW_EXTRA) / CARD_ASPECT;
+    const wByHeight = (rowH - rowExtra) / CARD_ASPECT;
     const cardWidth = Math.min(wByWidth, wByHeight);
     if (cardWidth > best.cardWidth) best = { cols, cardWidth };
   }
@@ -77,9 +80,15 @@ export default function RevealPage({ cards, onBack }: RevealPageProps) {
     return () => ro.disconnect();
   }, []);
 
+  // English splits the label across two lines (name / orientation) because the
+  // combined string is long enough that neighboring labels overlapped. Other
+  // languages stay on one compact line. Budget the label height accordingly.
+  const twoLine = lang === 'en';
+  const labelH = twoLine ? LABEL_LINE_H * 2 : LABEL_LINE_H;
+
   const { cols, cardWidth } = useMemo(
-    () => fitGrid(cards.length, avail),
-    [cards.length, avail],
+    () => fitGrid(cards.length, avail, labelH),
+    [cards.length, avail, labelH],
   );
 
   return (
@@ -90,11 +99,14 @@ export default function RevealPage({ cards, onBack }: RevealPageProps) {
         </h1>
 
         {/* Flexible middle region the grid is measured against and centered in.
-            overflow-hidden is a belt-and-braces guard: even if a spread is a
-            hair too tall, it clips here instead of covering the title/button. */}
+            The inner padding gives the cards' glow halo and labels room to
+            breathe: the ResizeObserver reads contentRect (padding excluded), so
+            the grid is sized to the inner box and the padding becomes a
+            clip-free margin. overflow-hidden stays as a belt-and-braces guard so
+            an over-tall spread clips here instead of covering the title/button. */}
         <div
           ref={gridAreaRef}
-          className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden"
+          className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden px-3 py-2"
         >
           <div
             className="grid justify-center"
@@ -126,10 +138,18 @@ export default function RevealPage({ cards, onBack }: RevealPageProps) {
                     />
                   </div>
                   <p
-                    className="mt-1 truncate text-center font-serif text-white"
-                    style={{ height: LABEL_H, fontSize: Math.max(11, Math.min(16, cardWidth / 9)) }}
+                    className="mt-1 text-center font-serif leading-tight text-white"
+                    style={{ height: labelH, fontSize: Math.max(11, Math.min(16, cardWidth / 9)) }}
                   >
-                    {revealedCardLabel(revealed, lang, t)}
+                    {twoLine ? (
+                      <>
+                        {cardName(card, lang)}
+                        <br />
+                        {`(${t(`orientation.${orientation}`)})`}
+                      </>
+                    ) : (
+                      revealedCardLabel(revealed, lang, t)
+                    )}
                   </p>
                 </motion.div>
               );

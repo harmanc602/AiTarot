@@ -271,7 +271,7 @@
     "imageKey": "cups01",
     "name": {
       "en": "Ace of Cups",
-      "zh": "杯一",
+      "zh": "聖杯一",
       "ja": "カップのエース"
     }
   },
@@ -283,7 +283,7 @@
     "imageKey": "cups02",
     "name": {
       "en": "Two of Cups",
-      "zh": "杯二",
+      "zh": "聖杯二",
       "ja": "カップの2"
     }
   },
@@ -295,7 +295,7 @@
     "imageKey": "cups03",
     "name": {
       "en": "Three of Cups",
-      "zh": "杯三",
+      "zh": "聖杯三",
       "ja": "カップの3"
     }
   },
@@ -307,7 +307,7 @@
     "imageKey": "cups04",
     "name": {
       "en": "Four of Cups",
-      "zh": "杯四",
+      "zh": "聖杯四",
       "ja": "カップの4"
     }
   },
@@ -319,7 +319,7 @@
     "imageKey": "cups05",
     "name": {
       "en": "Five of Cups",
-      "zh": "杯五",
+      "zh": "聖杯五",
       "ja": "カップの5"
     }
   },
@@ -331,7 +331,7 @@
     "imageKey": "cups06",
     "name": {
       "en": "Six of Cups",
-      "zh": "杯六",
+      "zh": "聖杯六",
       "ja": "カップの6"
     }
   },
@@ -343,7 +343,7 @@
     "imageKey": "cups07",
     "name": {
       "en": "Seven of Cups",
-      "zh": "杯七",
+      "zh": "聖杯七",
       "ja": "カップの7"
     }
   },
@@ -355,7 +355,7 @@
     "imageKey": "cups08",
     "name": {
       "en": "Eight of Cups",
-      "zh": "杯八",
+      "zh": "聖杯八",
       "ja": "カップの8"
     }
   },
@@ -367,7 +367,7 @@
     "imageKey": "cups09",
     "name": {
       "en": "Nine of Cups",
-      "zh": "杯九",
+      "zh": "聖杯九",
       "ja": "カップの9"
     }
   },
@@ -379,7 +379,7 @@
     "imageKey": "cups10",
     "name": {
       "en": "Ten of Cups",
-      "zh": "杯十",
+      "zh": "聖杯十",
       "ja": "カップの10"
     }
   },
@@ -391,7 +391,7 @@
     "imageKey": "cups11",
     "name": {
       "en": "Page of Cups",
-      "zh": "杯侍從",
+      "zh": "聖杯侍從",
       "ja": "カップのペイジ"
     }
   },
@@ -403,7 +403,7 @@
     "imageKey": "cups12",
     "name": {
       "en": "Knight of Cups",
-      "zh": "杯騎士",
+      "zh": "聖杯騎士",
       "ja": "カップのナイト"
     }
   },
@@ -415,7 +415,7 @@
     "imageKey": "cups13",
     "name": {
       "en": "Queen of Cups",
-      "zh": "杯王后",
+      "zh": "聖杯王后",
       "ja": "カップのクイーン"
     }
   },
@@ -427,7 +427,7 @@
     "imageKey": "cups14",
     "name": {
       "en": "King of Cups",
-      "zh": "杯國王",
+      "zh": "聖杯國王",
       "ja": "カップのキング"
     }
   },
@@ -607,7 +607,7 @@
     "imageKey": "swords01",
     "name": {
       "en": "Ace of Swords",
-      "zh": "劍一",
+      "zh": "寶劍一",
       "ja": "ソードのエース"
     }
   },
@@ -619,7 +619,7 @@
     "imageKey": "swords02",
     "name": {
       "en": "Two of Swords",
-      "zh": "劍二",
+      "zh": "寶劍二",
       "ja": "ソードの2"
     }
   },
@@ -631,7 +631,7 @@
     "imageKey": "swords03",
     "name": {
       "en": "Three of Swords",
-      "zh": "劍三",
+      "zh": "寶劍三",
       "ja": "ソードの3"
     }
   },
@@ -643,7 +643,7 @@
     "imageKey": "swords04",
     "name": {
       "en": "Four of Swords",
-      "zh": "劍四",
+      "zh": "寶劍四",
       "ja": "ソードの4"
     }
   },
@@ -655,7 +655,7 @@
     "imageKey": "swords05",
     "name": {
       "en": "Five of Swords",
-      "zh": "劍五",
+      "zh": "寶劍五",
       "ja": "ソードの5"
     }
   },
@@ -667,7 +667,7 @@
     "imageKey": "swords06",
     "name": {
       "en": "Six of Swords",
-      "zh": "劍六",
+      "zh": "寶劍六",
       "ja": "ソードの6"
     }
   },
@@ -679,7 +679,7 @@
     "imageKey": "swords07",
     "name": {
       "en": "Seven of Swords",
-      "zh": "劍七",
+      "zh": "寶劍七",
       "ja": "ソードの7"
     }
   },
@@ -691,7 +691,7 @@
     "imageKey": "swords08",
     "name": {
       "en": "Eight of Swords",
-      "zh": "劍八",
+      "zh": "寶劍八",
       "ja": "ソードの8"
     }
   },
@@ -703,7 +703,7 @@
     "imageKey": "swords09",
     "name": {
       "en": "Nine of Swords",
-      "zh": "劍九",
+      "zh": "寶劍九",
       "ja": "ソードの9"
     }
   },
@@ -715,7 +715,7 @@
     "imageKey": "swords10",
     "name": {
       "en": "Ten of Swords",
-      "zh": "劍十",
+      "zh": "寶劍十",
       "ja": "ソードの10"
     }
   },
@@ -727,7 +727,7 @@
     "imageKey": "swords11",
     "name": {
       "en": "Page of Swords",
-      "zh": "劍侍從",
+      "zh": "寶劍侍從",
       "ja": "ソードのペイジ"
     }
   },
@@ -739,7 +739,7 @@
     "imageKey": "swords12",
     "name": {
       "en": "Knight of Swords",
-      "zh": "劍騎士",
+      "zh": "寶劍騎士",
       "ja": "ソードのナイト"
     }
   },
@@ -751,7 +751,7 @@
     "imageKey": "swords13",
     "name": {
       "en": "Queen of Swords",
-      "zh": "劍王后",
+      "zh": "寶劍王后",
       "ja": "ソードのクイーン"
     }
   },
@@ -763,7 +763,7 @@
     "imageKey": "swords14",
     "name": {
       "en": "King of Swords",
-      "zh": "劍國王",
+      "zh": "寶劍國王",
       "ja": "ソードのキング"
     }
   },
