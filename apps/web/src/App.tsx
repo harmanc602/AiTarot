@@ -62,29 +62,34 @@ export default function App() {
 
   return (
     <div className="starfield relative z-10 flex h-full flex-col overflow-hidden">
-      <header className="flex items-center justify-between px-5 py-4">
+      <header className="flex shrink-0 items-center justify-between px-5 py-4">
         <span className="font-display text-xl font-bold tracking-wide text-gold">
           {t('app.title')}
         </span>
         <LanguageSwitcher />
       </header>
 
-      {/* Instruction + Enter button, pinned above the wheel. This block is a
-          transparent overlay: it must not capture clicks meant for the cards
-          fanning up beneath it, so pointer events pass through except on the
-          button itself. */}
-      <div className="pointer-events-none flex shrink-0 flex-col items-center gap-4 px-4 pt-2 text-center">
-        <p className="max-w-md font-serif text-lg text-white/90 sm:text-xl">
-          {t('picker.instruction')}
-        </p>
-        <div className="pointer-events-auto h-12">
-          <EnterButton visible={canConfirm(selected)} onEnter={handleEnter} />
+      {/* Two-part split via flex, no JS-measured heights (so it can't drift when
+          this screen remounts after "draw again"). Upper part takes only the
+          content it needs; the wheel gets ALL remaining height and sizes its fan
+          to fill that band — so the ratio stays responsive on any viewport. */}
+      <div className="flex min-h-0 flex-1 flex-col">
+        {/* Upper part: instruction + Enter button. shrink-0 → only as tall as
+            its content, centered, never eating the wheel's room. */}
+        <div className="flex shrink-0 flex-col items-center justify-center gap-4 px-4 py-3 text-center">
+          <p className="max-w-md font-serif text-lg text-white/90 sm:text-xl">
+            {t('picker.instruction')}
+          </p>
+          <div className="h-12">
+            <EnterButton visible={canConfirm(selected)} onEnter={handleEnter} />
+          </div>
         </div>
-      </div>
 
-      {/* The wheel fills the remaining space; only its upper arc shows. */}
-      <div className="relative min-h-0 flex-1">
-        <CardWheel selected={selected} onSelect={handleSelect} />
+        {/* Lower part: the card wheel fills the rest. Only the upper arc shows;
+            the band clips the rest so nothing spills into the text above. */}
+        <div className="relative min-h-0 w-full flex-1 overflow-hidden">
+          <CardWheel selected={selected} onSelect={handleSelect} />
+        </div>
       </div>
 
       <Toast message={toast} />

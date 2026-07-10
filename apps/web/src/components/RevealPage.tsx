@@ -9,9 +9,20 @@ interface RevealPageProps {
   onBack: () => void;
 }
 
-const CARD_ASPECT = 1.5; // height / width
+// height / width of the actual card artwork. The clean scans are ~1.77 tall;
+// 1.8 is a hair conservative so even the tallest card fits its budgeted row and
+// the spread never overflows behind the title / Back button.
+const CARD_ASPECT = 1.8;
 const GAP = 20; // px gap between cards (matches gap-5)
-const LABEL_H = 28; // px reserved under each card for its name
+// Per-card vertical chrome that isn't the image: the label line, its `mt-1`
+// margin, the card's 1px top+bottom border, plus a little line-height slack.
+// `fitGrid` must subtract ALL of it per row or the spread grows taller than
+// measured and bleeds over the title / Back button.
+const LABEL_H = 20; // label line height
+const LABEL_MARGIN = 4; // mt-1
+const CARD_BORDER = 2; // 1px top + 1px bottom
+const ROW_EXTRA = LABEL_H + LABEL_MARGIN + CARD_BORDER;
+const SAFETY = 0.98; // guard against sub-pixel rounding
 
 /**
  * Pick the grid shape (columns × rows) and the resulting card width that lets
@@ -24,19 +35,20 @@ function fitGrid(count: number, avail: { w: number; h: number }) {
   if (count === 0 || avail.w === 0 || avail.h === 0) {
     return { cols: 1, cardWidth: 0 };
   }
+  const h = avail.h * SAFETY;
   let best = { cols: 1, cardWidth: 0 };
   for (let cols = 1; cols <= count; cols++) {
     const rows = Math.ceil(count / cols);
     // Width limit: cols cards + gaps must fit the available width.
     const wByWidth = (avail.w - (cols - 1) * GAP) / cols;
-    // Height limit: rows of (card + label + gap) must fit the available height.
-    const rowH = (avail.h - (rows - 1) * GAP) / rows;
-    const wByHeight = (rowH - LABEL_H) / CARD_ASPECT;
+    // Height limit: rows of (image + label + margin + border + gap) must fit.
+    const rowH = (h - (rows - 1) * GAP) / rows;
+    const wByHeight = (rowH - ROW_EXTRA) / CARD_ASPECT;
     const cardWidth = Math.min(wByWidth, wByHeight);
     if (cardWidth > best.cardWidth) best = { cols, cardWidth };
   }
   // Keep cards readable but never larger than a sensible max.
-  best.cardWidth = Math.min(best.cardWidth, 260);
+  best.cardWidth = Math.max(0, Math.min(best.cardWidth, 260));
   return best;
 }
 
@@ -77,8 +89,13 @@ export default function RevealPage({ cards, onBack }: RevealPageProps) {
           {t('reveal.title')}
         </h1>
 
-        {/* Flexible middle region the grid is measured against and centered in. */}
-        <div ref={gridAreaRef} className="flex min-h-0 w-full flex-1 items-center justify-center">
+        {/* Flexible middle region the grid is measured against and centered in.
+            overflow-hidden is a belt-and-braces guard: even if a spread is a
+            hair too tall, it clips here instead of covering the title/button. */}
+        <div
+          ref={gridAreaRef}
+          className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden"
+        >
           <div
             className="grid justify-center"
             style={{

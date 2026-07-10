@@ -11,6 +11,7 @@ import {
   wrapRotation,
 } from '@aitarot/core';
 import CardBack from './CardBack';
+import { wheelMetrics } from '../wheelGeometry';
 
 interface CardWheelProps {
   /** Selected card ids (for the glow indicator). */
@@ -53,32 +54,17 @@ export default function CardWheel({ selected, onSelect }: CardWheelProps) {
     return () => ro.disconnect();
   }, []);
 
-  // Radius scales with the band so the fan looks right from phone to desktop.
-  // Smaller cards + a tighter radius keep the wheel compact so the apex cards
-  // stay clear of the instruction/Enter block above.
-  const cardWidth = Math.max(78, Math.min(138, size.w / 5.33));
-  const cardHeight = cardWidth * 1.5;
-  const radius = Math.max(260, Math.min(size.w * 0.62, 540));
-
-  // Narrow viewports show a slimmer arc (fewer cards on screen at once) and
-  // drop the arc lower so the fan hugs the bottom. Wide viewports open the arc
-  // up to the full spread. `size.w === 0` on first paint → treat as wide.
-  const visibleHalfArc = size.w === 0 ? 54 : Math.max(25, Math.min(54, size.w / 13.33));
+  // All sizing/placement math is shared with the picker layout (App.tsx) via
+  // `wheelMetrics`, so the instruction block can be positioned right above the
+  // fan without guessing where the fan's apex lands.
+  const { cardWidth, cardHeight, radius, visibleHalfArc, hubTop } = wheelMetrics(
+    size.w,
+    size.h,
+  );
   const layout = useMemo(
     () => makeWheelLayout(DECK.length, visibleHalfArc),
     [visibleHalfArc],
   );
-
-  // Anchor the fan to the *bottom* of the band so the wheel always hugs the
-  // bottom edge, however tall the window is dragged. We position the hub so the
-  // lowest visible cards sit a small margin above the bottom, then clamp so the
-  // apex card can never be pushed off the top (or into the Enter button) on
-  // short windows. `size.h === 0` on first paint → fall back to the min.
-  const arcRad = (visibleHalfArc * Math.PI) / 180;
-  const bottomMargin = cardHeight * 0.4;
-  const topGap = cardHeight * 1.1; // keep apex clear of the Enter button above
-  const bottomAnchoredHub = size.h - bottomMargin + radius * Math.cos(arcRad) - cardHeight / 2;
-  const hubTop = Math.max(radius + topGap, bottomAnchoredHub);
 
   const dragStart = useRef<{ x: number; rot: number } | null>(null);
   const moved = useRef(0);

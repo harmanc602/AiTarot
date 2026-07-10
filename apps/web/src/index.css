@@ -7,9 +7,17 @@
 }
 
 html,
-body,
-#root {
+body {
   height: 100%;
+  margin: 0;
+}
+
+/* Track the *visible* viewport on mobile: 100vh ignores the browser's address
+   bar (so content hides behind it / below the fold), while 100dvh follows the
+   bar as it shows and hides. vh first as a fallback for older browsers. */
+#root {
+  height: 100vh;
+  height: 100dvh;
   margin: 0;
 }
 
