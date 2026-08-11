@@ -93,7 +93,5 @@ DECK (core) ──▶ CardWheel renders backs on the visible arc
 - **Correctness lives in one place.** The tricky bits — the 1–10 rule, the reveal
   randomization, the rotation trig — are pure functions with unit tests, not tangled into
   view code twice.
-- **Consistency for free.** Both apps show identical card names, identical messages, and an
-  identical card back, because they import the same modules.
-- **Testable.** Core has no platform deps, so `node --test` runs the logic without a browser
-  or simulator.
+- **Consistency for free.** Both apps show identical card names, identical messages, and an identical card back, because they import the same modules.
+- **Testable.** Core has no platform deps, so `node --test` runs the logic without a browser or simulator.
