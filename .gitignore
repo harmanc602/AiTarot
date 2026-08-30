@@ -19,6 +19,7 @@ __pycache__/
 # Env / logs
 .env
 .env.*
+!.env.example
 *.log
 npm-debug.log*
 
@@ -27,3 +28,6 @@ npm-debug.log*
 Thumbs.db
 .idea/
 .vscode/
+
+# pdf
+*.pdf
