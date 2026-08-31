@@ -24,18 +24,19 @@ export function createLLMClient(config?: Partial<LLMConfig>): BaseChatModel {
   const temperature = config?.temperature ?? 0.7
   const maxTokens = config?.maxTokens ?? 512
 
+  console.log('[LLM Client] Creating with:', { provider, model, baseURL })
+
   switch (provider) {
     case 'nvidia-nim':
-      // NVIDIA NIM uses OpenAI-compatible API
+      // NVIDIA uses OpenAI-compatible API
       return new ChatOpenAI({
         openAIApiKey: apiKey,
         modelName: model,
         configuration: {
-          baseURL: baseURL || 'https://integrate.api.nvidia.com/v1',
+          baseURL: 'https://integrate.api.nvidia.com/v1',
         },
         temperature,
         maxTokens,
-        streaming: true,
       })
 
     case 'openai':
@@ -58,10 +59,11 @@ export function createLLMClient(config?: Partial<LLMConfig>): BaseChatModel {
 
     case 'ollama':
       return new ChatOpenAI({
-        openAIApiKey: 'ollama', // Ollama doesn't need API key
+        openAIApiKey: 'not-needed', // Ollama doesn't validate API key
         modelName: model,
         configuration: {
           baseURL: baseURL || 'http://localhost:11434/v1',
+          defaultHeaders: {},
         },
         temperature,
         maxTokens,
@@ -106,8 +108,23 @@ export async function* streamCompletion(
 /**
  * Get LLM config for a specific user tier.
  * In MVP, this is frontend-only. Future: backend will override.
+ *
+ * NOTE: If .env.local has explicit LLM settings, those take precedence.
  */
 export function getLLMConfigForTier(tier: string): Partial<LLMConfig> {
+  // If env vars are explicitly set, use them (for development/testing)
+  const envProvider = import.meta.env.VITE_LLM_PROVIDER
+  const envModel = import.meta.env.VITE_LLM_MODEL
+
+  if (envProvider && envModel) {
+    return {
+      provider: envProvider,
+      model: envModel,
+      maxTokens: 512,
+    }
+  }
+
+  // Otherwise use tier-based defaults
   const tierMap: Record<string, Partial<LLMConfig>> = {
     free: {
       provider: 'nvidia-nim',

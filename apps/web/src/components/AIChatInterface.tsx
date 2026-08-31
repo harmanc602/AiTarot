@@ -67,16 +67,21 @@ export default function AIChatInterface({
     setIsLoading(true)
 
     try {
-      // Include current reading context in RAG query if available
-      const queryContext = currentReading
-        ? `Current spread: ${currentReading.map(r => `${r.card.id} (${r.orientation})`).join(', ')}. Question: ${userMessage}`
-        : userMessage
+      // TEMPORARY: Skip RAG retrieval since database is empty
+      // TODO: Re-enable when card meanings are seeded
+      const cardContexts: any[] = []
+      const guidelineContexts: any[] = []
 
-      // Retrieve both card meanings and methodology guidelines
-      const [cardContexts, guidelineContexts] = await Promise.all([
-        retrieveCardContext(queryContext),
-        retrieveGuidelineContext(userMessage)
-      ])
+      // // Include current reading context in RAG query if available
+      // const queryContext = currentReading
+      //   ? `Current spread: ${currentReading.map(r => `${r.card.id} (${r.orientation})`).join(', ')}. Question: ${userMessage}`
+      //   : userMessage
+
+      // // Retrieve both card meanings and methodology guidelines
+      // const [cardContexts, guidelineContexts] = await Promise.all([
+      //   retrieveCardContext(queryContext),
+      //   retrieveGuidelineContext(userMessage)
+      // ])
 
       let assistantContent = ''
 
@@ -106,9 +111,12 @@ export default function AIChatInterface({
       }
     } catch (error) {
       console.error('Chat error:', error)
+      const errorMessage = error instanceof Error
+        ? `Error: ${error.message}`
+        : 'Sorry, I encountered an error. Please try again.'
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
+        content: errorMessage,
         timestamp: Date.now()
       }])
     } finally {

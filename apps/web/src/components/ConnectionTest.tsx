@@ -24,9 +24,21 @@ export default function ConnectionTest() {
   }
 
   const testSupabaseConnection = async () => {
+    // First check if we have valid config
+    const url = import.meta.env.VITE_SUPABASE_URL
+    const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+
+    if (!url || url.includes('placeholder')) {
+      throw new Error('VITE_SUPABASE_URL not configured or is placeholder')
+    }
+
+    if (!key || key.includes('placeholder')) {
+      throw new Error('VITE_SUPABASE_PUBLISHABLE_KEY not configured or is placeholder')
+    }
+
     const { data, error } = await supabase.from('user_tiers').select('tier_name').limit(1)
-    if (error) throw error
-    return `Connected! Found ${data?.length || 0} tier(s)`
+    if (error) throw new Error(`Supabase query failed: ${error.message}`)
+    return `Connected! Found ${data?.length || 0} tier(s): ${data?.map(t => t.tier_name).join(', ')}`
   }
 
   const testSupabaseTables = async () => {
@@ -49,11 +61,98 @@ export default function ConnectionTest() {
   }
 
   const testLLM = async () => {
-    const llm = createLLMClient()
-    const response = await llm.invoke([
-      new HumanMessage("Say 'Connection successful' and nothing else.")
-    ])
-    return response.content
+    const steps: string[] = []
+
+    // Step 1: Check env vars
+    const provider = import.meta.env.VITE_LLM_PROVIDER
+    const model = import.meta.env.VITE_LLM_MODEL
+    const baseURL = import.meta.env.VITE_LLM_BASE_URL
+    const apiKey = import.meta.env.VITE_LLM_API_KEY
+
+    steps.push(`Step 1: Environment Variables`)
+    steps.push(`  Provider: ${provider}`)
+    steps.push(`  Model: ${model}`)
+    steps.push(`  Base URL: ${baseURL}`)
+    steps.push(``)
+
+    // Step 2: For Ollama, check model availability
+    if (provider === 'ollama') {
+      steps.push(`Step 2: Checking Ollama models...`)
+      const checkURL = baseURL?.replace('/v1', '') || 'http://localhost:11434'
+
+      try {
+        const tagsResp = await fetch(`${checkURL}/api/tags`)
+        const tagsData = await tagsResp.json()
+
+        if (!tagsData.models || tagsData.models.length === 0) {
+          throw new Error(`No Ollama models installed. Run: ollama pull ${model}`)
+        }
+
+        const hasModel = tagsData.models.some((m: any) => m.name === model)
+        if (!hasModel) {
+          const available = tagsData.models.map((m: any) => m.name).join(', ')
+          throw new Error(`Model "${model}" not found. Available: ${available}. Run: ollama pull ${model}`)
+        }
+
+        steps.push(`  ✓ Model "${model}" found`)
+        steps.push(``)
+      } catch (err: any) {
+        throw new Error(`${steps.join('\n')}\n\n❌ ${err.message}`)
+      }
+    }
+
+    // Step 3: Test direct API call
+    steps.push(`Step 3: Testing direct API call...`)
+    const testURL = `${baseURL}/chat/completions`
+    steps.push(`  URL: ${testURL}`)
+
+    try {
+      const directResp = await fetch(testURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(provider !== 'ollama' && apiKey && { 'Authorization': `Bearer ${apiKey}` })
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [{ role: 'user', content: 'Say hello' }],
+          stream: false,
+          max_tokens: 20
+        })
+      })
+
+      steps.push(`  Status: ${directResp.status}`)
+      steps.push(`  Content-Type: ${directResp.headers.get('content-type')}`)
+
+      if (!directResp.ok) {
+        const errorText = await directResp.text()
+        throw new Error(`API returned ${directResp.status}: ${errorText.substring(0, 200)}`)
+      }
+
+      const directData = await directResp.json()
+      const directMessage = directData.choices?.[0]?.message?.content || 'No response'
+      steps.push(`  ✓ Response: "${directMessage}"`)
+      steps.push(``)
+    } catch (err: any) {
+      throw new Error(`${steps.join('\n')}\n\n❌ ${err.message}`)
+    }
+
+    // Step 4: Test LangChain client
+    steps.push(`Step 4: Testing LangChain wrapper...`)
+
+    try {
+      const llm = createLLMClient()
+      const response = await llm.invoke([
+        new HumanMessage("Say 'LangChain works'")
+      ])
+      steps.push(`  ✓ Response: "${response.content}"`)
+      steps.push(``)
+      steps.push(`✅ All steps passed!`)
+
+      return steps.join('\n')
+    } catch (err: any) {
+      throw new Error(`${steps.join('\n')}\n\n❌ LangChain error: ${err.message}`)
+    }
   }
 
   const testVectorSearch = async () => {
