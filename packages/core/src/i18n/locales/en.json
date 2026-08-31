@@ -8,7 +8,8 @@
   },
   "reveal": {
     "title": "Your Card Spread",
-    "back": "Draw again"
+    "back": "Draw again",
+    "drawAgain": "Draw Again"
   },
   "orientation": {
     "upright": "Upright",
@@ -17,6 +18,17 @@
   "cardLabel": "{{name}} ({{orientation}})",
   "toast": {
     "maxCards": "We only support spreads of up to 10 cards."
+  },
+  "chat": {
+    "title": "Card Guidance",
+    "placeholder": "Ask about your cards...",
+    "send": "Send",
+    "error": "Sorry, I encountered an error. Please try again.",
+    "spreadLog": "Spread of {{count}} card revealed",
+    "spreadLog_plural": "Spread of {{count}} cards revealed",
+    "hoverToView": "Hover to view",
+    "cardsSelected": "{{count}} card selected",
+    "cardsSelected_plural": "{{count}} cards selected"
   },
   "language": {
     "label": "Language",

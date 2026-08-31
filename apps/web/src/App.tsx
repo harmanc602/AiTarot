@@ -12,15 +12,23 @@ import CardWheel from './components/CardWheel';
 import EnterButton from './components/EnterButton';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import RevealPage from './components/RevealPage';
+import SplitLayout from './components/SplitLayout';
+import AIChatInterface from './components/AIChatInterface';
 import Toast from './components/Toast';
+import ConnectionTest from './components/ConnectionTest';
 
-type Screen = 'pick' | 'reveal';
+type Screen = 'wheel' | 'reveal';
 
 const TOAST_MS = 2600;
 
 export default function App() {
+  // Check if we're on the test page
+  if (window.location.pathname === '/test') {
+    return <ConnectionTest />
+  }
+
   const { t } = useTranslation();
-  const [screen, setScreen] = useState<Screen>('pick');
+  const [leftScreen, setLeftScreen] = useState<Screen>('wheel');
   const [selected, setSelected] = useState<string[]>([]);
   const [revealed, setRevealed] = useState<RevealedCard[]>([]);
   const [toast, setToast] = useState<string | null>(null);
@@ -47,20 +55,16 @@ export default function App() {
     // Resolve ids -> cards in pick order, then assign random orientations once.
     const picked = selected.map((id) => getCardById(id)).filter(Boolean) as typeof DECK;
     setRevealed(revealCards(picked));
-    setScreen('reveal');
+    setLeftScreen('reveal');
   }, [selected]);
 
   const handleBack = useCallback(() => {
     setSelected([]);
     setRevealed([]);
-    setScreen('pick');
+    setLeftScreen('wheel');
   }, []);
 
-  if (screen === 'reveal') {
-    return <RevealPage cards={revealed} onBack={handleBack} />;
-  }
-
-  return (
+  const wheelSection = (
     <div className="starfield relative z-10 flex h-full flex-col overflow-hidden">
       <header className="flex shrink-0 items-center justify-between px-5 py-4">
         <span className="font-display text-xl font-bold tracking-wide text-gold">
@@ -97,5 +101,23 @@ export default function App() {
 
       <Toast message={toast} />
     </div>
+  );
+
+  const revealSection = <RevealPage cards={revealed} onBack={handleBack} />;
+
+  const chatSection = (
+    <AIChatInterface
+      selectedCards={selected}
+      currentReading={leftScreen === 'reveal' ? revealed : null}
+      onSpreadLog={() => {}}
+      userTier={import.meta.env.VITE_USER_TIER || 'free'}
+    />
+  );
+
+  return (
+    <SplitLayout
+      wheelOrReveal={leftScreen === 'wheel' ? wheelSection : revealSection}
+      chat={chatSection}
+    />
   );
 }

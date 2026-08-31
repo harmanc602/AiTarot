@@ -77,7 +77,7 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 )
 
 // Vector search example
@@ -116,7 +116,7 @@ Add to `.env.local` (gitignored):
 
 ```
 VITE_SUPABASE_URL=https://xxx.supabase.co
-VITE_SUPABASE_ANON_KEY=xxx
+VITE_SUPABASE_PUBLISHABLE_KEY=xxx
 VITE_NVIDIA_NIM_URL=https://integrate.api.nvidia.com/v1/chat/completions
 VITE_NVIDIA_NIM_API_KEY=xxx
 ```

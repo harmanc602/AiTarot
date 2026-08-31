@@ -92,7 +92,7 @@ export default function RevealPage({ cards, onBack }: RevealPageProps) {
   );
 
   return (
-    <div className="starfield relative z-10 flex h-full flex-col overflow-hidden">
+    <div className="relative z-10 flex h-full flex-col overflow-hidden">
       <div className="mx-auto flex h-full w-full max-w-6xl flex-col items-center px-4 py-6 sm:px-6">
         <h1 className="mb-4 shrink-0 text-center font-display text-3xl font-bold text-gold sm:text-4xl">
           {t('reveal.title')}

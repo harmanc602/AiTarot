@@ -8,7 +8,8 @@
   },
   "reveal": {
     "title": "あなたのカード",
-    "back": "もう一度引く"
+    "back": "もう一度引く",
+    "drawAgain": "もう一度引く"
   },
   "orientation": {
     "upright": "正位置",
@@ -17,6 +18,17 @@
   "cardLabel": "{{name}}（{{orientation}}）",
   "toast": {
     "maxCards": "スプレッドは最大10枚までサポートしています。"
+  },
+  "chat": {
+    "title": "カードガイダンス",
+    "placeholder": "カードについて質問する...",
+    "send": "送信",
+    "error": "申し訳ございません、エラーが発生しました。もう一度お試しください。",
+    "spreadLog": "{{count}}枚のカードが表示されました",
+    "spreadLog_plural": "{{count}}枚のカードが表示されました",
+    "hoverToView": "ホバーして表示",
+    "cardsSelected": "{{count}}枚のカードが選択されています",
+    "cardsSelected_plural": "{{count}}枚のカードが選択されています"
   },
   "language": {
     "label": "言語",

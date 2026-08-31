@@ -8,7 +8,8 @@
   },
   "reveal": {
     "title": "你的牌陣",
-    "back": "重新抽牌"
+    "back": "重新抽牌",
+    "drawAgain": "重新抽牌"
   },
   "orientation": {
     "upright": "正位",
@@ -17,6 +18,17 @@
   "cardLabel": "{{name}}（{{orientation}}）",
   "toast": {
     "maxCards": "我們最多支援10張牌的牌陣。"
+  },
+  "chat": {
+    "title": "牌義指引",
+    "placeholder": "問問題關於你的牌...",
+    "send": "發送",
+    "error": "抱歉，發生錯誤。請再試一次。",
+    "spreadLog": "顯示了 {{count}} 張牌",
+    "spreadLog_plural": "顯示了 {{count}} 張牌",
+    "hoverToView": "懸停查看",
+    "cardsSelected": "已選擇 {{count}} 張牌",
+    "cardsSelected_plural": "已選擇 {{count}} 張牌"
   },
   "language": {
     "label": "語言",
