@@ -22,11 +22,11 @@
   "layout": {
     "switcher": "Switch view",
     "cards": "Cards",
-    "chat": "Guidance",
+    "chat": "AI chat",
     "resize": "Resize panels"
   },
   "chat": {
-    "title": "Card Guidance",
+    "title": "AI Tarot Reading",
     "placeholder": "Ask about your cards...",
     "send": "Send",
     "error": "Sorry, I encountered an error. Please try again.",

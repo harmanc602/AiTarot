@@ -22,11 +22,11 @@
   "layout": {
     "switcher": "切換畫面",
     "cards": "卡牌",
-    "chat": "指引",
+    "chat": "解牌",
     "resize": "調整版面比例"
   },
   "chat": {
-    "title": "牌義指引",
+    "title": "AI解牌",
     "placeholder": "問問題關於你的牌...",
     "send": "發送",
     "error": "抱歉，發生錯誤。請再試一次。",
