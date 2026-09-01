@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 interface SplitLayoutProps {
   wheelOrReveal: React.ReactNode // wheel picker OR reveal screen
   chat: React.ReactNode // persistent chat interface
+  chatEnabled?: boolean // if false, show wheel/reveal full-width
 }
 
 /** The wheel/reading pane may take between 40% and 60% of the width. */
@@ -25,8 +26,14 @@ const clampRatio = (value: number) => Math.min(MAX_RATIO, Math.max(MIN_RATIO, va
  *   them. Both stay mounted (chat history and the wheel's measured geometry
  *   survive switching) — the inactive one is just hidden.
  */
-export default function SplitLayout({ wheelOrReveal, chat }: SplitLayoutProps) {
+export default function SplitLayout({ wheelOrReveal, chat, chatEnabled = true }: SplitLayoutProps) {
   const { t } = useTranslation()
+
+  // If chat is disabled, render wheel/reveal full-width
+  if (!chatEnabled) {
+    return <div className="w-full h-full">{wheelOrReveal}</div>
+  }
+
   const [isPortrait, setIsPortrait] = useState(
     () => window.innerHeight > window.innerWidth,
   )

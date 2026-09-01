@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 96" fill="none">
+  <rect width="64" height="96" rx="4" fill="#0A0D12"/>
+  <rect x="2" y="2" width="60" height="92" rx="3" stroke="#6EE7B7" stroke-width="2" fill="none"/>
+  <circle cx="32" cy="32" r="12" stroke="#6EE7B7" stroke-width="1.5" fill="none"/>
+  <path d="M32 24 L32 20 M32 44 L32 40 M24 32 L20 32 M44 32 L40 32" stroke="#6EE7B7" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="32" y="72" font-family="system-ui" font-size="10" fill="#6EE7B7" text-anchor="middle">AI Tarot</text>
+</svg>

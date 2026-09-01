@@ -22,8 +22,8 @@ type Screen = 'wheel' | 'reveal';
 const TOAST_MS = 2600;
 
 export default function App() {
-  // Check if we're on the test page
-  if (window.location.pathname === '/test') {
+  // Check if we're on the test page (dev only, via ?test query param)
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).has('test')) {
     return <ConnectionTest />
   }
 
@@ -114,10 +114,13 @@ export default function App() {
     />
   );
 
+  const chatEnabled = import.meta.env.VITE_CHAT_ENABLED !== 'false'
+
   return (
     <SplitLayout
       wheelOrReveal={leftScreen === 'wheel' ? wheelSection : revealSection}
       chat={chatSection}
+      chatEnabled={chatEnabled}
     />
   );
 }
