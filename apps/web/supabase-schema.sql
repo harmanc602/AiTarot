@@ -1,5 +1,15 @@
 -- AiTarot Supabase Schema Setup
--- Run this SQL in your Supabase SQL Editor
+-- Run this SQL in your Supabase SQL Editor.
+--
+-- Safe to re-run: every statement is idempotent (IF NOT EXISTS / OR REPLACE /
+-- DROP POLICY IF EXISTS), so an existing project can be brought up to date by
+-- executing the whole file again.
+--
+-- SECURITY: tables created with plain CREATE TABLE have Row Level Security
+-- OFF, and Supabase grants the `anon` role full DML on the public schema by
+-- default. That means the publishable key -- which ships inside the client
+-- bundle -- could INSERT/UPDATE/DELETE these rows. The RLS section at the
+-- bottom of this file closes that; do not deploy publicly without it.
 
 -- Enable vector extension
 CREATE EXTENSION IF NOT EXISTS vector;
@@ -116,3 +126,41 @@ BEGIN
   LIMIT match_count;
 END;
 $$;
+
+-- ============================================================================
+-- Row Level Security
+-- ============================================================================
+-- All three tables hold shared *reference* data: the same rows for every
+-- visitor, written only by the seeding scripts. So the policy is simply
+-- "anyone may read, nobody may write" -- writes go through the service_role
+-- key (used by scripts/seed-database.ts), which bypasses RLS entirely.
+--
+-- The RPC functions above are plain plpgsql (not SECURITY DEFINER), so they
+-- execute as the caller and these SELECT policies govern them too -- vector
+-- search keeps working for anon.
+--
+-- When user-specific tables arrive later (saved readings, profiles), give them
+-- their own policies keyed on auth.uid(); these reference tables stay as-is.
+
+ALTER TABLE card_meanings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reading_guidelines ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_tiers ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "card_meanings_public_read" ON card_meanings;
+CREATE POLICY "card_meanings_public_read"
+  ON card_meanings FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "reading_guidelines_public_read" ON reading_guidelines;
+CREATE POLICY "reading_guidelines_public_read"
+  ON reading_guidelines FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "user_tiers_public_read" ON user_tiers;
+CREATE POLICY "user_tiers_public_read"
+  ON user_tiers FOR SELECT TO anon, authenticated USING (true);
+
+-- Defence in depth: with no INSERT/UPDATE/DELETE policy, RLS already denies
+-- writes, but dropping the underlying grants means a future permissive policy
+-- can't silently re-open them either.
+REVOKE INSERT, UPDATE, DELETE ON card_meanings FROM anon, authenticated;
+REVOKE INSERT, UPDATE, DELETE ON reading_guidelines FROM anon, authenticated;
+REVOKE INSERT, UPDATE, DELETE ON user_tiers FROM anon, authenticated;
