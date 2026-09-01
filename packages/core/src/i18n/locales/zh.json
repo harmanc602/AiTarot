@@ -19,6 +19,12 @@
   "toast": {
     "maxCards": "我們最多支援10張牌的牌陣。"
   },
+  "layout": {
+    "switcher": "切換畫面",
+    "cards": "卡牌",
+    "chat": "指引",
+    "resize": "調整版面比例"
+  },
   "chat": {
     "title": "牌義指引",
     "placeholder": "問問題關於你的牌...",

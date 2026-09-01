@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { retrieveCardContext, retrieveGuidelineContext, generateResponse } from '../lib/rag'
+import { generateResponse } from '../lib/rag'
 import type { RevealedCard } from '@aitarot/core'
 import { cardImage } from '../cardImages'
 
@@ -26,7 +26,7 @@ export default function AIChatInterface({
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [hoveredSpread, setHoveredSpread] = useState<RevealedCard[] | null>(null)
+  const [clickedSpread, setClickedSpread] = useState<RevealedCard[] | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -151,13 +151,14 @@ export default function AIChatInterface({
               <div
                 key={i}
                 className="flex justify-center"
-                onMouseEnter={() => setHoveredSpread(msg.spread || null)}
-                onMouseLeave={() => setHoveredSpread(null)}
               >
-                <div className="cursor-pointer rounded-lg border border-gold/40 bg-gold/10 px-4 py-2 text-center transition-colors hover:bg-gold/20">
+                <div
+                  className="cursor-pointer rounded-lg border border-gold/40 bg-gold/10 px-4 py-2 text-center transition-colors hover:bg-gold/20"
+                  onClick={() => setClickedSpread(msg.spread || null)}
+                >
                   <p className="font-serif text-xs text-gold">{msg.content}</p>
                   <p className="mt-1 font-sans text-[10px] text-white/40">
-                    Hover to view
+                    Click to view
                   </p>
                 </div>
               </div>
@@ -184,12 +185,27 @@ export default function AIChatInterface({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Hovered Spread Overlay */}
-      {hoveredSpread && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="max-h-[80%] max-w-[90%] overflow-auto rounded-lg bg-deep-purple/90 p-4">
+      {/* Clicked Spread Overlay */}
+      {clickedSpread && (
+        <div
+          className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => setClickedSpread(null)}
+        >
+          <div
+            className="max-h-[80%] max-w-[90%] overflow-auto rounded-lg bg-deep-purple/90 p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="font-display text-sm text-gold">Spread Preview</h3>
+              <button
+                onClick={() => setClickedSpread(null)}
+                className="text-white/60 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
-              {hoveredSpread.map((revealed, idx) => (
+              {clickedSpread.map((revealed, idx) => (
                 <div key={idx} className="flex flex-col items-center">
                   <div
                     className="w-20 overflow-hidden rounded border border-gold/40"

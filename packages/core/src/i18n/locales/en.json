@@ -19,6 +19,12 @@
   "toast": {
     "maxCards": "We only support spreads of up to 10 cards."
   },
+  "layout": {
+    "switcher": "Switch view",
+    "cards": "Cards",
+    "chat": "Guidance",
+    "resize": "Resize panels"
+  },
   "chat": {
     "title": "Card Guidance",
     "placeholder": "Ask about your cards...",
