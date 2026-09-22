@@ -64,12 +64,42 @@ This installs dependencies for every workspace (`packages/core`, `apps/web`, `ap
 
 ## Running locally
 
+### Prerequisites for AI Chat Feature
+
+The web app includes an AI chat interface powered by a local LLM. Before running the web app, you need to:
+
+1. **Install Ollama** (if not already installed):
+   - Download from [https://ollama.com/download](https://ollama.com/download)
+   - Follow the installation instructions for your platform
+
+2. **Pull the required model**:
+   ```bash
+   ollama pull llama3.2:1b
+   ```
+
+3. **Start Ollama** (if not already running):
+   ```bash
+   ollama serve
+   ```
+   
+   Ollama will listen on `http://localhost:11434` by default. Keep this running in a separate terminal.
+
+4. **Start the LLM Proxy Service**:
+   ```bash
+   cd services/llm-proxy
+   npm run dev
+   ```
+   
+   The proxy will listen on `http://localhost:3000` and route chat requests to Ollama. Keep this running in a separate terminal.
+
 ### Web
 
 ```bash
 npm run web          # starts Vite dev server (http://localhost:5173)
 npm run web:build    # type-check + production build -> apps/web/dist
 ```
+
+**Note:** The web app's AI chat feature requires both Ollama and the LLM proxy service to be running (see prerequisites above). If they are not running, the chat interface will show connection errors.
 
 ### Mobile
 

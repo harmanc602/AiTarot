@@ -25,6 +25,11 @@ __pycache__/
 *.log
 npm-debug.log*
 
+# LLM Proxy
+services/llm-proxy/.env
+services/llm-proxy/dist/
+services/llm-proxy/node_modules/
+
 # OS / editor
 .DS_Store
 Thumbs.db

@@ -15,18 +15,12 @@ import RevealPage from './components/RevealPage';
 import SplitLayout from './components/SplitLayout';
 import AIChatInterface from './components/AIChatInterface';
 import Toast from './components/Toast';
-import ConnectionTest from './components/ConnectionTest';
 
 type Screen = 'wheel' | 'reveal';
 
 const TOAST_MS = 2600;
 
 export default function App() {
-  // Check if we're on the test page (dev only, via ?test query param)
-  if (import.meta.env.DEV && new URLSearchParams(window.location.search).has('test')) {
-    return <ConnectionTest />
-  }
-
   const { t } = useTranslation();
   const [leftScreen, setLeftScreen] = useState<Screen>('wheel');
   const [selected, setSelected] = useState<string[]>([]);

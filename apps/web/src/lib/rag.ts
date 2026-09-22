@@ -1,6 +1,6 @@
 import { supabase } from './supabase'
 import { getEmbedding } from './embeddings'
-import { streamCompletion, getLLMConfigForTier, type ChatMessage } from './llm'
+import { streamCompletion } from './llm'
 import type { RevealedCard } from '@aitarot/core'
 import { cardName } from '@aitarot/core'
 
@@ -83,7 +83,7 @@ export async function* generateResponse(
   cardContexts: RAGContext[],
   guidelineContexts: GuidelineContext[],
   currentReading: RevealedCard[] | null,
-  userTier: string = 'free'
+  _userTier: string = 'free'
 ): AsyncGenerator<string> {
   // Build context from retrieved card meanings
   const cardContextStr = cardContexts
@@ -115,19 +115,5 @@ export async function* generateResponse(
     systemPrompt += `\n\n**Current Reading:**\n${readingStr}\n\nProvide guidance based on this specific spread. Consider the relationships between cards and their positions.`
   }
 
-  const messages: ChatMessage[] = [
-    {
-      role: 'system',
-      content: systemPrompt
-    },
-    {
-      role: 'user',
-      content: userQuery
-    }
-  ]
-
-  // Get LLM config based on user tier
-  const llmConfig = getLLMConfigForTier(userTier)
-
-  yield* streamCompletion(messages, llmConfig)
+  yield* streamCompletion(systemPrompt, userQuery)
 }
